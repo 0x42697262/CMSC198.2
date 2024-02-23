@@ -7,8 +7,8 @@ Extracts data from `osu!` replay files ([.osr](<https://osu.ppy.sh/wiki/en/Clien
 
 Table of Contents:
 
-- [Usage](## Usage)
-- [.osr (file format)](## .osr (file format))
+- [Usage](#usage)
+- [.osr (file format)](#osr-file-format)
 
 ## Usage
 
