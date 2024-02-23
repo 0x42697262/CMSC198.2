@@ -2,11 +2,21 @@
 
 Extracts data from `osu!` replay files ([.osr](<https://osu.ppy.sh/wiki/en/Client/File_formats/osr_(file_format)>))
 
+> [!NOTE]
+> This tool only extracts necessary data for the paper. Do not expect that this tool will work for general use case. Please use other existing tools for that.
+
+Table of Contents:
+
+- [Usage](## Usage)
+- [.osr (file format)](## .osr (file format))
+
+## Usage
+
 ## .osr (file format)
 
 **.osr** is a file format containing information about an osu! replay. To use it, the beatmap specified by the file is required in "Songs" folder.
 
-## Data Types
+### Data Types
 
 | Name    | Bytes    | Description                                                                                                                                                                                                                                                                                                                                                                           |
 | :------ | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -17,7 +27,7 @@ Extracts data from `osu!` replay files ([.osr](<https://osu.ppy.sh/wiki/en/Clien
 | ULEB128 | Variable | A variable length integer. See [ULEB128](https://en.wikipedia.org/wiki/LEB128).                                                                                                                                                                                                                                                                                                       |
 | String  | Variable | Has three parts; a single byte which will be either 0x00, indicating that the next two parts are not present, or 0x0b (decimal 11), indicating that the next two parts are present. If it is 0x0b, there will then be a ULEB128, representing the byte length of the following string, and then the string itself, encoded in UTF-8. See [UTF-8](https://en.wikipedia.org/wiki/UTF-8) |
 
-## Format
+### Format
 
 Byte offsets are not included in this table due to variable length values.
 
@@ -64,7 +74,7 @@ When decompressed, the text contains data separated by commas. Each piece denote
 
 On replays set on version `20130319` or later, the 32-bit integer RNG seed used for the score will be encoded into an additional replay frame at the end of the LZMA stream, under the format `-12345|0|0|seed`.
 
-## Mods
+### Mods
 
 As seen on the [osu! API](https://github.com/ppy/osu-api/wiki#mods).
 
