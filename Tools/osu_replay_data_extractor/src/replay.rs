@@ -6,7 +6,7 @@ pub struct ReplayData {
     /// osu! beatmap MD5 hash
     pub beatmap_hash: String,
     /// Player name
-    player_name: String,
+    pub player_name: String,
     /// osu! replay MD5 hash (includes certain properties of the replay)
     replay_hash: String,
     /// Number of 300s
@@ -26,13 +26,14 @@ pub struct ReplayData {
     /// Greatest combo displayed on the score report
     pub max_combo: u16,
     /// Perfect/full combo (1 = no misses and no slider breaks and no early finished sliders)
-    pub perfect_combo: bool,
+    pub perfect_combo: u8,
+    // pub perfect_combo: bool,
     /// Mods used. See below for list of mod values.
     mods: u32,
     /// Life bar graph: comma separated pairs u/v, where u is the time in milliseconds into the song and v is a floating point value from 0 - 1 that represents the amount of life you have at the given time (0 = life bar is empty, 1= life bar is full)
     hp: String,
     /// Time stamp (Windows ticks)
-    timestamp: u64,
+    pub timestamp: u64,
     /// Length in bytes of compressed replay data
     replay_length: u32,
     /// Compressed replay data
@@ -58,7 +59,8 @@ impl ReplayData {
         count_miss: u16,
         score: u32,
         max_combo: u16,
-        perfect_combo: bool,
+        perfect_combo: u8,
+        // perfect_combo: bool,
         mods: u32,
         hp: String,
         timestamp: u64,

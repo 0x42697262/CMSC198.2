@@ -117,3 +117,13 @@ pub fn parse_uleb128(file: &mut std::fs::File) -> std::io::Result<u64> {
     }
     Ok(result)
 }
+
+pub fn decompress_lzma(compressed_data: &[u8]) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    use std::io::Read;
+
+    let mut decoder = xz2::read::XzDecoder::new(compressed_data);
+    let mut decompressed_data = Vec::new();
+    decoder.read_to_end(&mut decompressed_data)?;
+
+    Ok(decompressed_data)
+}

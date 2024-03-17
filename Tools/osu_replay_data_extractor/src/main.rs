@@ -40,7 +40,8 @@ fn main() {
 
     if !csv_exists {
         let _ = csv_writer.write_record(&[
-            "beatmap_hash",
+            // "beatmap_hash",
+            "player_name",
             "count300",
             "count100",
             "count50",
@@ -48,6 +49,7 @@ fn main() {
             "score",
             "max_combo",
             "perfect_combo",
+            "timestamp",
             // "replay_data",
         ]);
     }
@@ -103,6 +105,7 @@ fn main() {
                         let max_combo: u16 =
                             u16::from_le_bytes(util::read_short(&mut replay).unwrap());
                         let perfect_combo: bool = util::read_bool(&mut replay).unwrap();
+                        // let perfect_combo: u8 = util::read_bool(&mut replay).unwrap() as u8;
                         let mods: u32 =
                             u32::from_le_bytes(util::read_integer(&mut replay).unwrap());
                         let hp: String = match util::read_string(&mut replay) {
@@ -117,16 +120,26 @@ fn main() {
                         let replay_length: u32 =
                             u32::from_le_bytes(util::read_integer(&mut replay).unwrap());
                         // let replay_data: Vec<u8> =
-                        //     util::read_byte_array(&mut replay, replay_length as usize).unwrap();
-                        let replay_data: Vec<u8> =
-                            match util::read_byte_array(&mut replay, replay_length as usize) {
-                                Ok(data) => data,
-                                Err(_) => continue,
-                            };
+                        // util::read_byte_array(&mut replay, replay_length as usize).unwrap();
+                        let replay_data =
+                            util::read_byte_array(&mut replay, replay_length as usize);
+                        // let replay_data: Vec<u8> =
+                        //     match util::read_byte_array(&mut replay, replay_length as usize) {
+                        //         Ok(data) => data,
+                        //         Err(_) => continue,
+                        //     };
                         let online_score_id: u64 =
                             u64::from_le_bytes(util::read_long(&mut replay).unwrap_or_default());
 
-                        let replay_data: replay::ReplayData = replay::ReplayData::new(
+                        // let decompressed_replay = match util::decompress_lzma(&replay_data) {
+                        //     Ok(decompressed_data) => decompressed_data,
+                        //     Err(e) => {
+                        //         println!("{osr:?}: {e:?}`");
+                        //         continue;
+                        //     }
+                        // };
+
+                        let osr_replay: replay::ReplayData = replay::ReplayData::new(
                             game_mode,
                             version,
                             beatmap_hash,
@@ -140,25 +153,29 @@ fn main() {
                             count_miss,
                             score,
                             max_combo,
-                            perfect_combo,
+                            perfect_combo as u8,
                             mods,
                             hp,
                             timestamp,
                             replay_length,
-                            replay_data,
+                            // replay_data,
+                            vec![],
+                            // decompressed_replay,
                             online_score_id,
                             0.0,
                         );
                         let _ = csv_writer.serialize((
-                            &replay_data.beatmap_hash,
-                            &replay_data.count300,
-                            &replay_data.count100,
-                            &replay_data.count50,
-                            &replay_data.count_miss,
-                            &replay_data.score,
-                            &replay_data.max_combo,
-                            &replay_data.perfect_combo,
-                            // &replay_data.replay_data,
+                            &osr_replay.beatmap_hash,
+                            &osr_replay.player_name,
+                            &osr_replay.count300,
+                            &osr_replay.count100,
+                            &osr_replay.count50,
+                            &osr_replay.count_miss,
+                            &osr_replay.score,
+                            &osr_replay.max_combo,
+                            &osr_replay.perfect_combo,
+                            &osr_replay.timestamp,
+                            // &osr_replay.replay_data,
                         ));
                         // println!("Saved {osr:?} with game mode: {game_mode}");
                         parsed_replays_count += 1;
