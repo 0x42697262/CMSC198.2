@@ -17,7 +17,11 @@
           };
         in
         pkgs.mkShell {
-          packages = with pkgs; [ mariadb dbeaver ];
+          packages = with pkgs; [
+            mariadb
+            dbeaver
+            python312
+          ];
           shellHook = ''echo "Hello"; fish '';
         };
 
