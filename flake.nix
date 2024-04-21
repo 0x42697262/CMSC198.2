@@ -21,6 +21,8 @@
             mariadb
             dbeaver
             python312
+            python312Packages.mysql-connector
+            sqlitebrowser
           ];
           shellHook = ''echo "Hello"; fish '';
         };
