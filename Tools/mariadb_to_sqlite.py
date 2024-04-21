@@ -32,7 +32,7 @@ for player in players:
     FROM osu_user_stats
     JOIN scores ON osu_user_stats.user_id = osu_user_stats.user_id
     JOIN osu_beatmaps ON scores.beatmap_id = osu_beatmaps.beatmap_id
-    WHERE user_id = {id}
+    WHERE osu_user_stats.user_id = {id}
     """)
     rows = maria_cursor.fetchall()
     sqlite_conn = sqlite3.connect(f"./../Data/players/{id}.db")
