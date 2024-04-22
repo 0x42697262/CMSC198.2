@@ -18,13 +18,20 @@
         in
         pkgs.mkShell {
           packages = with pkgs; [
-            mariadb
             dbeaver
+            jupyter-all
+            mariadb
             python312
             python312Packages.mysql-connector
+            python312Packages.numpy
+            python312Packages.pandas
+            python312Packages.scikitlearn
             sqlitebrowser
           ];
-          shellHook = ''echo "Hello"; fish '';
+          shellHook = ''echo "Hello";
+          fish;
+          jupyter notebook --notebook-dir=. --ip=0.0.0.0
+          '';
         };
 
     };
