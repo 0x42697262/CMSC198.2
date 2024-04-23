@@ -19,11 +19,25 @@
         pkgs.mkShell {
           packages = with pkgs; [
             dbeaver
-            jupyter-all
+            # jupyter-all
             mariadb
-            python312
-            python312Packages.mysql-connector
+            # python312
+            # python312Packages.mysql-connector
+            # python312Packages.numpy
+            # python312Packages.pandas
+            # python312Packages.scikitlearn
             sqlitebrowser
+            (pkgs.python3.withPackages (ps: with ps; [
+              mysql-connector
+              notebook
+              ipykernel
+              jupyterlab
+              matplotlib
+              numpy
+              pandas
+              seaborn
+              networkx
+            ]))
           ];
           shellHook = ''echo "Hello";
           fish;
