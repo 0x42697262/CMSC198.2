@@ -23,14 +23,10 @@
             mariadb
             python312
             python312Packages.mysql-connector
-            python312Packages.numpy
-            python312Packages.pandas
-            python312Packages.scikitlearn
             sqlitebrowser
           ];
           shellHook = ''echo "Hello";
           fish;
-          jupyter notebook --notebook-dir=. --ip=0.0.0.0
           '';
         };
 
