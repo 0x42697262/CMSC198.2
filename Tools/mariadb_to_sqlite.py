@@ -1,11 +1,5 @@
 import mysql.connector
-import sqlite3
-from datetime import datetime
-
-maria_conn = mysql.connector.connect(user='root', password='cmsc198', host='172.17.0.1', database='osu')
-maria_cursor = maria_conn.cursor()
-
-import mysql.connector
+import json
 import sqlite3
 from datetime import datetime
 
@@ -71,6 +65,20 @@ for player in players:
         row = maria_cursor.fetchone()
         if row is None:
             break
+
+        data = json.loads(row[-1].decode('utf-8'))
+        if "NF" in data:
+            break
+        stats = data['statistics']
+
+        # this will be reallly slow ride
+        great: int  = stats.get('great', 0)
+        ok: int     = stats.get('ok', 0)
+        meh: int    = stats.get('meh', 0)
+        miss: int   = stats.get('miss', 0)
+
+        new_row = row[:-1] + (great, ok, meh, miss)
+
         sqlite_cursor.execute("""
             INSERT INTO scores
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
