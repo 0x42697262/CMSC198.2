@@ -35,7 +35,10 @@ for player in players:
             countNormal INTEGER,
             countSlider INTEGER,
             countSpinner INTEGER,
-            data TEXT
+            great INTEGER,
+            ok INTEGER,
+            meh INTEGER,
+            miss INTEGER
         )
     """)
 
@@ -81,8 +84,8 @@ for player in players:
 
         sqlite_cursor.execute("""
             INSERT INTO scores
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, row)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, new_row)
 
     # Commit and close SQLite connection
     sqlite_conn.commit()
