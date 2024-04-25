@@ -60,7 +60,7 @@ for player in players:
         FROM osu_user_stats
         JOIN scores ON osu_user_stats.user_id = scores.user_id
         JOIN osu_beatmaps ON scores.beatmap_id = osu_beatmaps.beatmap_id
-        WHERE osu_user_stats.user_id = {id}
+        WHERE osu_user_stats.user_id = {id} ORDER BY scores.unix_updated_at ASC
     """)
     
     # Stream data and insert into SQLite
